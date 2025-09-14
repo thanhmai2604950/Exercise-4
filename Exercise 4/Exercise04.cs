@@ -14,7 +14,7 @@ namespace Exercise_03
         {
             Ex01();
             Ex02();
-            Ex03();
+            Ex03(); 
             Ex0401();
             Ex0402();
             Ex05();
@@ -27,26 +27,69 @@ namespace Exercise_03
         static void Ex01()
         {
             Console.WriteLine("Enter three numbers:");
-            int a = int.Parse(Console.ReadLine());
-            int b = int.Parse(Console.ReadLine());
-            int c = int.Parse(Console.ReadLine());
+            string? inputA = Console.ReadLine();
+            string? inputB = Console.ReadLine();
+            string? inputC = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(inputA) || string.IsNullOrWhiteSpace(inputB) || string.IsNullOrWhiteSpace(inputC))
+            {
+                Console.WriteLine("Invalid input. Please enter valid numbers.");
+                return;
+            }
+
+            int a = int.Parse(inputA);
+            int b = int.Parse(inputB);
+            int c = int.Parse(inputC);
 
             int largest = FindLargestOfThree(a, b, c);
             Console.WriteLine($"Largest of three is: {largest}");
             Console.WriteLine("Enter numbers separated by space:");
-            string[] input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string? inputLine = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(inputLine))
+            {
+                Console.WriteLine("Invalid input. Please enter valid numbers.");
+                return;
+            }
+            string[] input = inputLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             int[] numbers = Array.ConvertAll(input, int.Parse);
 
             int largestVarArg = FindLargest(numbers);
             Console.WriteLine($"Largest (varArg) is: {largestVarArg}");
+            static int FindLargestOfThree(int a, int b, int c)
+            {
+                int max = a;
+                if (b > max) max = b;
+                if (c > max) max = c;
+                return max;
+            }
+
+            static int FindLargest(params int[] numbers)
+            {
+                if (numbers == null || numbers.Length == 0)
+                    throw new ArgumentException("At least one number is required.");
+
+                int max = numbers[0];
+                foreach (int num in numbers)
+                {
+                    if (num > max)
+                        max = num;
+                }
+                return max;
+            }
         }
         /// <summary>
-        ///2.Write a C# function to calculate the factorial of a number (a non-negative integer). The function accepts the number as an argument.
+        /// 2.Write a C# function to calculate the factorial of a number (a non-negative integer). The function accepts the number as an argument.
         /// </summary>
         static void Ex02()
         {
             Console.Write("Enter a non-negative integer: ");
-            int n = int.Parse(Console.ReadLine());
+            string? input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid non-negative integer.");
+                return;
+            }
+            int n = int.Parse(input);
 
             if (n < 0)
             {
@@ -68,7 +111,13 @@ namespace Exercise_03
         static void Ex03()
         {
             Console.Write("Enter a number: ");
-            int n = int.Parse(Console.ReadLine());
+            string? input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number.");
+                return;
+            }
+            int n = int.Parse(input);
 
             if (n <= 1)
             {
@@ -98,7 +147,13 @@ namespace Exercise_03
         static void Ex0401()
         {
             Console.Write("Enter a number: ");
-            int n = int.Parse(Console.ReadLine());
+            string? input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number.");
+                return;
+            }
+            int n = int.Parse(input);
 
             if (n <= 2)
             {
@@ -132,7 +187,13 @@ namespace Exercise_03
         static void Ex0402()
         {
             Console.Write("Enter N (number of prime numbers to print): ");
-            int n = int.Parse(Console.ReadLine());
+            string? input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number.");
+                return;
+            }
+            int n = int.Parse(input);
 
             if (n <= 0)
             {
@@ -174,7 +235,13 @@ namespace Exercise_03
         {
             // 1. Check a number is Perfect or not
             Console.Write("Enter a number to check Perfect or not: ");
-            int n = int.Parse(Console.ReadLine());
+            string? input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number.");
+                return;
+            }
+            int n = int.Parse(input);
 
             int sum = 0;
             for (int i = 1; i <= n / 2; i++)
@@ -210,7 +277,13 @@ namespace Exercise_03
         static void Ex06()
         {
             Console.WriteLine("Enter a sentence to check pangram or not:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Invalid input. Please enter a non-empty sentence.");
+                return;
+            }
 
             // chuẩn hóa: đưa về chữ thường, bỏ ký tự không phải a-z
             string lower = input.ToLower();
@@ -240,5 +313,4 @@ namespace Exercise_03
                 Console.WriteLine("This sentence is NOT a Pangram.");
         }
     }
-}
 }
